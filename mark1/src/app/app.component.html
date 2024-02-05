@@ -1,0 +1,108 @@
+<div style="border: 2px solid black;width: 99%;height: 100px;">
+  <div style="float: right; margin-right: 10px;">logout</div>
+  <div
+    class="logo">
+    LOGO</div>
+</div>
+<div style="border: 2px solid black;width: 99%;height: 55px; margin-top: 10px;">
+  <button class="button" (click)="selectTab('consultation')"
+    [class.active]="selectedTab === 'consultation'">Consultation</button>
+  <button class="button" (click)="selectTab('physician')"
+    [class.active]="selectedTab === 'physician'">Physician</button>
+</div>
+
+  <!-- Consultation content goes here -->
+  <div *ngIf="selectedTab === 'consultation'">
+    <div style="border: 2px solid black;width: 49%;height: 800px; margin-top: 1px; float: right;">
+      <div>
+        <p style="margin-left: 10px;font-weight: bold;">Test Share</p>
+        <div #chart></div>
+      </div>
+    </div>
+  <div style="border: 2px solid black;width: 49%;height: 171px; margin-top: 10px; padding-left:10px ;">
+    <!-- <app-consultation></app-consultation> -->
+    <form [formGroup]="prescriptionForm" (ngSubmit)="addRecord()">
+      <input class="input" type="text" id="patientName" formControlName="patientName" placeholder="Patient Name"
+        required style="width: 40%;">
+      <input class="input" type="number" id="age" formControlName="age" placeholder="Age" required>
+      <input class="input" type="text" id="physicianName" formControlName="physicianName" placeholder="Physician Name"
+        required style="width: 40%;">
+      <input class="input" type="radio" formControlName="gender" value="male"> Male
+      <input type="radio" formControlName="gender" value="female"> Female
+      <input type="radio" formControlName="gender" value="other"> Other
+      <select id="prescribedTests" class="input" style="width: 41%;" formControlName="selectedTests">
+        <option value="" disabled selected hidden>Prescribed Tests</option>
+        <option value="CBC">CBC</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="RTC">RTC</option>
+      </select>
+      <div></div>
+      <button type="submit" style="margin-right: 20px;margin-left: 450px;margin-top: 36px;">Add</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </form>
+    <table style="margin-top: 20px;">
+      <thead>
+        <tr>
+          <th>Patient Name</th>
+          <th>Physician Name</th>
+          <th>Age</th>
+          <th>Prescribed Tests</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of prescriptionRecords">
+          <td>{{ record.patientName }}</td>
+          <td>{{ record.physicianName }}</td>
+          <td>{{ record.age }}</td>
+          <td>{{ record.selectedTests}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+</div>
+<div *ngIf="selectedTab === 'physician'" style="height: 800px; margin-top: 10px;">
+  <!-- Physician content goes here -->
+  <!-- Add the content for the Physician tab -->
+  <div style="border: 2px solid black;width: 49%;height: 171px; margin-top: 10px; padding-left:10px ;">
+    <form [formGroup]="physicianForm">
+      <input readonly formControlName="name" class="input" style="width: 40%;" placeholder="Physician Name">
+      <input class="input" type="number" id="age" formControlName="age" style="width: 40%;" placeholder="Age" placeholder="Age" required >
+      <input formControlName="qualification" class="input" style="width: 40%;" placeholder="Qualification">
+      <input class="input" type="radio" formControlName="gender" value="male" placeholder="gender"> Male
+      <input type="radio" formControlName="gender" value="female"> Female
+      <input type="radio" formControlName="gender" value="other"> Other
+      <select formControlName="specialization" style="width: 41%;" class="input" placeholder="Specialization">
+        <option value="" selected disabled hidden>Specialization</option>
+        <option value="General Medicine" class="input" placeholder="General Medicine">General Medicine</option>
+        <option value="General Physician" class="input" placeholder="General Physician">General Physician</option>
+        <option value="Pediatrics" class="input" placeholder="">Pediatrics</option>
+        <option value="Cardiologist" class="input" placeholder="">Cardiologist</option>
+        <option value="Lungs Specialist" class="input" placeholder="Lungs Specialist">Lungs Specialist</option>
+        <option value="Physiotherapist" class="input" placeholder="Physiotherapist">Physiotherapist</option>
+        <option value="Radiologist" class="input" placeholder="Radiologist">Radiologist</option>
+        <option value="Heart Specialist" class="input" placeholder="Heart Specialist">Heart Specialist</option>
+      </select>
+      <button (click)="onUpdatePhysician()" style="margin-right: 20px;margin-left: 450px;margin-top: 36px;">Update</button>
+      <button (click)="onResetForm()">Reset</button>
+    </form>
+  </div>
+    <table style="margin-top: 40px;">
+      <thead>
+        <tr>
+          <th>Physician Name</th>
+          <th>Qualification</th>
+          <th>Specialization</th>
+          <th>Age</th>
+          <th>Gender</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let physician of physicians" (click)="onSelectPhysician(physician)">
+        <td>{{ physician.name }}</td>
+        <td>{{ physician.qualification }}</td>
+        <td>{{ physician.specialization }}</td>
+        <td>{{ physician.age }}</td>
+        <td>{{ physician.gender }}</td>
+      </tr>
+    </table>
+</div>

@@ -1,0 +1,8 @@
+{
+    "workbench.list.fastScrollSensitivity": 2,
+    "terminal.integrated.stickyScroll.maxLineCount": 2,
+    "workbench.list.scrollByPage": true,
+    "editor.scrollbar.horizontalScrollbarSize": 5,
+    "editor.scrollbar.verticalScrollbarSize": 15,
+    "editor.smoothScrolling": true
+}
