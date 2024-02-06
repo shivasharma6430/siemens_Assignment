@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
   prescriptionRecords: any[] = [];
   flag:boolean=true;
   selectedPhysician: Physician | null = null;
-  // chart?: am5percent.PieChart;
   @ViewChild("chart", { static: false }) 
   private chartDom?: ElementRef;
   btn=document.getElementById('chart');
@@ -68,6 +67,7 @@ export class AppComponent implements OnInit {
     this.selectedPhysicianSubject.next(physician);
   }
 
+  //for updating data
   updatePhysician(updatedPhysician: Physician): void {
     const index = this.physicians.findIndex(p => p.name === updatedPhysician.name);
     if (index !== -1) {
@@ -81,18 +81,16 @@ export class AppComponent implements OnInit {
 
   ngAfterViewInit() {
     let chart = am4core.create(this.chartDom?.nativeElement, am4charts.PieChart);
-    // chart.radius = am4core.percent(0)
-
     // Add data
     chart.data = [ {
       "country": "CBC",
-      "litres": 501.9
+      "litres": 33.33
     }, {
       "country": "Chemistry",
-      "litres": 301.9
+      "litres": 33.33
     }, {
       "country": "RTC",
-      "litres": 201.1
+      "litres": 33.33
     }];
 
     // Add and configure Series
@@ -105,11 +103,12 @@ export class AppComponent implements OnInit {
 
     // This creates initial animation
     pieSeries.hiddenState.properties.opacity = 1;
-    pieSeries.hiddenState.properties.endAngle = 900;
-    pieSeries.hiddenState.properties.startAngle = 900;
+    pieSeries.hiddenState.properties.endAngle = -90;
+    pieSeries.hiddenState.properties.startAngle = -90;
 
     this.chart = chart;
   }
+  //for adding record
   addRecord() {
     const record = this.prescriptionForm.value;
     if(this.prescriptionForm.controls['patientName'].value && this.prescriptionForm.controls['physicianName'].value 
